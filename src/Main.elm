@@ -307,14 +307,23 @@ viewEntries visibility entries =
         [ class "main mdc-form-field"
         , style "visibility" cssVisibility
         ]
-        [ input
-            [ class "toggle-all mdc-checkbox"
-            , type_ "checkbox"
-            , name "toggle"
-            , checked allCompleted
-            , onClick (CheckAll (not allCompleted))
+        [ div
+            [ class "mdc-checkbox" ]
+            [ input
+                [ class "toggle-all mdc-checkbox__native-control"
+                , type_ "checkbox"
+                , name "toggle"
+                , checked allCompleted
+                , onClick (CheckAll (not allCompleted))
+                ]
+                []
+            , div
+                [ class "mdc-checkbox__background" ]
+                [ div
+                    [ class "mdc-checkbox__mixedmark" ]
+                    []
+                ]
             ]
-            []
         , label
             [ for "toggle-all" ]
             [ text "Mark all as complete" ]
@@ -338,13 +347,22 @@ viewEntry todo =
         [ classList [ ( "completed", todo.completed ), ( "editing", todo.editing ) ] ]
         [ div
             [ class "view mdc-form-field" ]
-            [ input
-                [ class "toggle mdc-checkbox"
-                , type_ "checkbox"
-                , checked todo.completed
-                , onClick (Check todo.id (not todo.completed))
+            [ div
+                [ class "mdc-checkbox" ]
+                [ input
+                    [ class "toggle mdc-checkbox__native-control"
+                    , type_ "checkbox"
+                    , checked todo.completed
+                    , onClick (Check todo.id (not todo.completed))
+                    ]
+                    []
+                , div
+                    [ class "mdc-checkbox__background" ]
+                    [ div
+                        [ class "mdc-checkbox__mixedmark" ]
+                        []
+                    ]
                 ]
-                []
             , label
                 [ onDoubleClick (EditingEntry todo.id True) ]
                 [ text todo.description ]
