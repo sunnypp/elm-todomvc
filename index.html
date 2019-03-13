@@ -6,17 +6,48 @@
   <title>Elm • TodoMVC</title>
   <script type="text/javascript" src="elm.js"></script>
   <link rel="stylesheet" href="style.css">
+  <!-- Required styles for MDC Web -->
+  <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
 </head>
 
 <body>
+<script>
+function mdc_init() {
+  /** Initialize MDC Web components. */
+  const buttons = document.querySelectorAll('.mdc-button');
+  for (const button of buttons) {
+    mdc.ripple.MDCRipple.attachTo(button);
+  }
+
+  const textFields = document.querySelectorAll('.mdc-text-field');
+  for (const textField of textFields) {
+    mdc.textField.MDCTextField.attachTo(textField);
+  }
+
+  const checkboxes = document.querySelectorAll('.mdc-checkbox');
+  for (const checkbox of checkboxes) {
+    mdc.checkbox.MDCCheckbox.attachTo(checkbox);
+  }
+
+  const forms = document.querySelectorAll('.mdc-form-field');
+  for (const form of forms) {
+    mdc.formField.MDCFormField.attachTo(form);
+  }
+}
+</script>
 <script type="text/javascript">
 var storedState = localStorage.getItem('elm-todo-save');
 var startingState = storedState ? JSON.parse(storedState) : null;
 var app = Elm.Main.init({ flags: startingState });
 app.ports.setStorage.subscribe(function(state) {
-    localStorage.setItem('elm-todo-save', JSON.stringify(state));
+  localStorage.setItem('elm-todo-save', JSON.stringify(state));
+  mdc_init();
 });
 </script>
+<!-- Required MDC Web JavaScript library -->
+<script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+<!-- Instantiate MDC elements -->
+<script>mdc_init();</script>
 </body>
 
 

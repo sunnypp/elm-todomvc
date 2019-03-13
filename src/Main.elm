@@ -236,18 +236,29 @@ view model =
 viewInput : String -> Html Msg
 viewInput task =
     header
-        [ class "header" ]
+        [ class "header " ]
         [ h1 [] [ text "todos" ]
-        , input
-            [ class "new-todo"
-            , placeholder "What needs to be done?"
-            , autofocus True
-            , value task
-            , name "newTodo"
-            , onInput UpdateField
-            , onEnter Add
+        , div
+            [ class "mdc-text-field" ]
+            [ input
+                [ class "new-todo mdc-text-field__input"
+                , autofocus True
+                , value task
+                , id "newTodo"
+                , name "newTodo"
+                , onInput UpdateField
+                , onEnter Add
+                ]
+                []
+            , label
+                [ class "mdc-floating-label"
+                , for "newTodo"
+                ]
+                [ text "What needs to be done?" ]
+            , div
+                [ class "mdc-line-ripple" ]
+                []
             ]
-            []
         ]
 
 
@@ -293,11 +304,11 @@ viewEntries visibility entries =
                 "visible"
     in
     section
-        [ class "main"
+        [ class "main mdc-form-field"
         , style "visibility" cssVisibility
         ]
         [ input
-            [ class "toggle-all"
+            [ class "toggle-all mdc-checkbox"
             , type_ "checkbox"
             , name "toggle"
             , checked allCompleted
@@ -326,9 +337,9 @@ viewEntry todo =
     li
         [ classList [ ( "completed", todo.completed ), ( "editing", todo.editing ) ] ]
         [ div
-            [ class "view" ]
+            [ class "view mdc-form-field" ]
             [ input
-                [ class "toggle"
+                [ class "toggle mdc-checkbox"
                 , type_ "checkbox"
                 , checked todo.completed
                 , onClick (Check todo.id (not todo.completed))
@@ -338,10 +349,10 @@ viewEntry todo =
                 [ onDoubleClick (EditingEntry todo.id True) ]
                 [ text todo.description ]
             , button
-                [ class "destroy"
+                [ class "destroy mdc-button"
                 , onClick (Delete todo.id)
                 ]
-                []
+                [ text "×" ]
             ]
         , input
             [ class "edit"
@@ -420,7 +431,7 @@ visibilitySwap uri visibility actualVisibility =
 viewControlsClear : Int -> Html Msg
 viewControlsClear entriesCompleted =
     button
-        [ class "clear-completed"
+        [ class "clear-completed mdc-button"
         , hidden (entriesCompleted == 0)
         , onClick DeleteComplete
         ]
